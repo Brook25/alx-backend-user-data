@@ -45,9 +45,9 @@ def filter_datum(fields: List[str],
                  separator: str) -> str:
     """function returns log message obfuscated """
     for i in fields:
-        mess = re.sub(fr'{i}=.+?{separator}',
+        message = re.sub(fr'{i}=.+?{separator}',
                          f'{i}={redaction}{separator}', message)
-    return mess
+    return message
 
 
 def get_logger() -> logging.Logger:
