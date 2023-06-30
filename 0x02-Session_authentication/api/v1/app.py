@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Route module for the API
+ module for routing to the API
 """
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
@@ -34,7 +34,7 @@ elif os.getenv("AUTH_TYPE") == "auth":
 
 @app.errorhandler(404)
 def not_found(error) -> str:
-    """ Not found handler
+    """handles Not found
     """
     return jsonify({"error": "Not found"}), 404
 
@@ -42,7 +42,7 @@ def not_found(error) -> str:
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """
-    Unauthorized handler.
+    handles Unauthorized
     """
     return jsonify({"error": "Unauthorized"}), 401
 
@@ -50,7 +50,7 @@ def unauthorized(error) -> str:
 @app.errorhandler(403)
 def forbidden(error) -> str:
     """
-    Forbidden handler
+    handles Forbidden
     """
     return jsonify({"error": "Forbidden"}), 403
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-3. Auth class
+modul contains Auth class
 """
 from flask import request
 from typing import List, TypeVar
@@ -9,11 +9,11 @@ import os
 
 class Auth():
     """
-    Auth class
+    class Authentication
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        def require_auth
+        method require_auth
         """
         if not path or not excluded_paths:
             return True
@@ -31,20 +31,20 @@ class Auth():
 
     def authorization_header(self, request=None) -> str:
         """
-        def authorization_header
+        method authorization_header
         """
         if request:
             return request.headers.get("Authorization")
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
-        def curent_user
+        method curent_user
         """
         return None
 
     def session_cookie(self, request=None):
         """
-
+        method session_cookie
         """
         if request is None:
             return None
