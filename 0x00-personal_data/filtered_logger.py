@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Filtered logger
 """
+import csv
 import re
 from typing import List
 import logging
+
+
+with open('user_data.csv', 'r') as file:
+    csv_data = csv.reader(file)
+    PII_FIELDS = tuple(next(csv_data)[1:6])
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -33,3 +39,14 @@ class RedactingFormatter(logging.Formatter):
         record.msg = filter_datum(self.__fields, self.REDACTION,
                                   record.msg, self.SEPARATOR)
         return super().format(record)
+
+def get_logger() -> logging.Logger:
+    """func returns a custom logger"""
+    global PII_FIELDS
+    logger = logging.getLogger('user_data')
+    logger.setLevel(logging.INFO)
+    formatter = RedactingFormatter(PII_FIELDS)
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger
