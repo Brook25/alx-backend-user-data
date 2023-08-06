@@ -38,6 +38,7 @@ class RedactingFormatter(logging.Formatter):
                                   record.msg, self.SEPARATOR)
         return super().format(record)
 
+
 def get_logger() -> logging.Logger:
     """func returns a custom logger"""
     global PII_FIELDS
