@@ -42,6 +42,7 @@ def get_logger() -> logging.Logger:
     """func returns a custom logger"""
     global PII_FIELDS
     logger = logging.getLogger('user_data')
+    logger.propagate = False
     logger.setLevel(logging.INFO)
     formatter = RedactingFormatter(PII_FIELDS)
     handler = logging.StreamHandler()
