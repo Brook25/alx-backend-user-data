@@ -3,13 +3,13 @@
 """
 import csv
 import re
-from typing import List
+from typing import List, Tuple, Iterator
 import logging
 
 
 with open('user_data.csv', 'r') as file:
-    csv_data = csv.reader(file)
-    PII_FIELDS = tuple(next(csv_data)[1:6])
+    csv_data: Iterator[List[str]] = csv.reader(file)
+    PII_FIELDS: Tuple = tuple(next(csv_data)[1:6])
 
 
 def filter_datum(fields: List[str], redaction: str,
