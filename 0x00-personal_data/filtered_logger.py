@@ -7,9 +7,7 @@ from typing import List, Tuple, Iterator
 import logging
 
 
-with open('user_data.csv', 'r') as file:
-    csv_data: Iterator[List[str]] = csv.reader(file)
-    PII_FIELDS: Tuple = tuple(next(csv_data)[1:6])
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(fields: List[str], redaction: str,
