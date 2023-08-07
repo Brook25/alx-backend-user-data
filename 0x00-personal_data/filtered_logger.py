@@ -2,7 +2,7 @@
 """Filtered logger
 """
 import csv
-import mysql.connector as connector
+import mysql.connector
 import re
 from typing import List, Tuple, Iterator
 import logging
