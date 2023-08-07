@@ -2,10 +2,11 @@
 """Filtered logger
 """
 import csv
+import mysql.connector as connector
 import re
 from typing import List, Tuple, Iterator
 import logging
-
+import os
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -50,3 +51,14 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
+
+
+def get_db():
+    """returns a mysql connection"""
+    connection = connector.connect(
+        host=os.environ['PERSONAL_DATA_DB_HOST'],
+        user=os.environ['PERSONAL_DATA_DB_USERNAME'],
+        password=os.environ['PERSONAL_DATA_DB_PASSWORD'],
+        database=os.environ['PERSONAL_DATA_DB_NAME']
+    )
+    return connection
