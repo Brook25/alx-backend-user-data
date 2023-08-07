@@ -2,7 +2,7 @@
 """Filtered logger
 """
 import csv
-import mysql.connector as connector
+import mysql.connector
 import re
 from typing import List, Tuple, Iterator
 import logging
@@ -53,7 +53,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> connector.connection.MySQLConnection:
+'''def get_db() -> connector.connection.MySQLConnection:
     """returns a mysql connection"""
     connection = connector.connect(
         host=os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
@@ -62,3 +62,13 @@ def get_db() -> connector.connection.MySQLConnection:
         database=os.environ.get('PERSONAL_DATA_DB_NAME')
     )
     return connection
+'''
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """function returns a connector to a database"""
+    connector = mysql.connector.connect(
+        user=os.environ.get("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.environ.get("PERSONAL_DATA_DB_PASSWORD", ""),
+        host=os.environ.get("PERSONAL_DATA_DB_HOST", "localhost"),
+        database=os.environ.get("PERSONAL_DATA_DB_NAME"))
+    return connector
