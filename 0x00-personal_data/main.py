@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
-"""
-module contains main file
-"""
+from filtered_logger import get_db, get_logger, PII_FIELDS
+import re
 
-filter_datum = __import__('filtered_logger').filter_datum
+FIELDS = PII_FIELDS + ('ip', 'last_login', 'user_agent')
 
-fields = ["password", "date_of_birth"]
-mess = ["name=egg;email=eggmin@eggsample.com;password=eggcellent;date_of_birth=12/12/1986;", "name=bob;email=bob@dylan.com;password=bobbycool;date_of_birth=03/04/1993;"]
-
-for message in mess:
-    print(filter_datum(fields, 'xxx', message, ';'))
+logger = get_logger()
+connection = get_db()
+cursor = connection.cursor()
+cursor.execute('SELECT * FROM users')
+for row in cursor:
+    row = list(row)
+    row[6] = row[6].strftime('%Y-%m-%d %H:%M:%S')
+    message = list(zip(FIELDS, row))
+    message = ['='.join(field) for field in message]
+    message = '; '.join(message)
+    logger.info(message)
+cursor.close()
+connection.close()
