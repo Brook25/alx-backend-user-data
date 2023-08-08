@@ -3,7 +3,7 @@
 """
 from .auth import Auth
 from base64 import b64decode
-from binascii import Error as err
+import binascii
 
 class BasicAuth(Auth):
     """Class for Basic Authentication"""
@@ -23,5 +23,5 @@ class BasicAuth(Auth):
         if b64_auth and type(b64_auth) is str:
             try:
                 return b64decode(b64_auth).decode('utf-8')
-            except err:
+            except binascii.Error:
                 return None
