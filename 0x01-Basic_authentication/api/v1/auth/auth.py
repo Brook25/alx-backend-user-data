@@ -11,6 +11,9 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """require authorizaition for a certain path"""
+        path = path + '/' if path and path[-1] != '/' else path
+        if not (path or excluded_paths) or path not in excluded_paths:
+            return True
         return False
 
     def authorization_header(self, request=None) -> str:
