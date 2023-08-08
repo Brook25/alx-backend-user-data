@@ -5,6 +5,7 @@ from .auth import Auth
 from base64 import b64decode
 import binascii
 
+
 class BasicAuth(Auth):
     """Class for Basic Authentication"""
     def extract_base64_authorization_header(
