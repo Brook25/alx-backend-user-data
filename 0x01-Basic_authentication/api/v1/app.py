@@ -23,8 +23,11 @@ if auth:
 def authenticate() -> None:
     """authorize request before routing"""
     if auth:
-        if auth.require_auth(request.path, ['/api/v1/status/',
-                '/api/v1/unauthorized/', '/api/v1/forbidden/']):
+        if auth.require_auth(request.path, [
+            '/api/v1/status/',
+            '/api/v1/unauthorized/',
+            '/api/v1/forbidden/'
+        ]):
             if auth.authorization_header(request):
                 if not auth.current_user(request):
                     abort(403)
