@@ -12,4 +12,4 @@ class BasicAuth(Auth):
         """returns the authentication token"""
         if authorization_header and type(authorization_header) is str:
             if authorization_header[:6] == 'Basic ':
-                return autherization_header[6:]
+                return authorization_header[6:]
