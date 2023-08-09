@@ -4,6 +4,8 @@
 from .auth import Auth
 from base64 import b64decode
 import binascii
+from typing import TypeVar
+from api.v1.views.users import User
 
 
 class BasicAuth(Auth):
@@ -35,3 +37,14 @@ class BasicAuth(Auth):
         if decoded and type(decoded) is str and ':' in decoded:
             return tuple(decoded.split(':'))
         return (None, None)
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str
+    ) -> TypeVar('User'):
+        """Validates user email and password"""
+        if user_email and user_pwd:
+            if type(user_email) is str and type(user_pwd) is str:
+                for user in User.search():
+                    if user.email == user_email:
+                        if user.is_valid_password(user_pwd):
+                            return user
