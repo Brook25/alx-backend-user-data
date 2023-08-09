@@ -39,7 +39,7 @@ class BasicAuth(Auth):
         """Returns user email and password from the decoded value"""
         decoded = decoded_base64_authorization_header
         if decoded and type(decoded) is str and ':' in decoded:
-            return tuple(decoded.split(':'))
+            return tuple(decoded.split(':', 1))
         return (None, None)
 
     def user_object_from_credentials(
