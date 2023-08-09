@@ -34,4 +34,3 @@ class Auth:
         """returns session cookie value"""
         if request:
             return request.cookies.get(os.getenv('SESSION_NAME'))
-
