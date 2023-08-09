@@ -39,7 +39,6 @@ def authenticate() -> None:
                 abort(401)
 
 
-
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """Unauthorized error
