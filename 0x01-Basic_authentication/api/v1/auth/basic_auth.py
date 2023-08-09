@@ -25,9 +25,13 @@ class BasicAuth(Auth):
         b64_auth = base64_authorization_header
         if b64_auth and type(b64_auth) is str:
             try:
-                return b64decode(b64_auth).decode('utf-8')
+                b64decoded = b64decode(b64_auth)
+                try:
+                    return b64decoded.decode('utf-8')
+                except UnicodeDecodeError:
+                    pass
             except binascii.Error:
-                return None
+                pass
 
     def extract_user_credentials(
             self, decoded_base64_authorization_header: str
@@ -52,11 +56,16 @@ class BasicAuth(Auth):
     def current_user(
             self, request=None
     ) -> TypeVar('User'):
-        """Retrieves the user instance of a request"""
+        """Retrieves the user instance of a request
+        """
         auth_header = self.authorization_header(request)
         if auth_header:
             b64header = self.extract_base64_authorization_header(auth_header)
             if b64header:
-                decoded_cred = self.decode_base64_authorization_header(b64header)
+                decoded_cred = self.decode_base64_authorization_header(
+                        b64header
+                )
             user_cred = self.extract_user_credentials(decoded_cred)
-            return self.user_object_from_credentials(user_cred[0], user_cred[1])
+            return self.user_object_from_credentials(
+                    user_cred[0], user_cred[1]
+            )
