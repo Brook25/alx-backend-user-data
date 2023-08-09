@@ -4,6 +4,7 @@
 from typing import List, TypeVar
 from flask import request
 from api.v1.views.users import User
+import re
 
 
 class Auth:
@@ -12,9 +13,12 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """require authorizaition for a certain path"""
         path = path + '/' if path and path[-1] != '/' else path
-        if not (path and excluded_paths) or path not in excluded_paths:
+        if not (path and excluded_paths):
             return True
-        return False
+        for exc_path in excluded_paths:
+            if bool(re.match(exc_path.replace('*', '.*'), path)):
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """get authorization header"""
