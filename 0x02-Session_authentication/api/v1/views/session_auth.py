@@ -17,7 +17,6 @@ def session_login():
     if not password:
         return jsonify({"error": "password missing"}), 400
     user = User.search({'email': email})
-    print(user)
     if user:
         user = user[0]
         if user.is_valid_password(password):
