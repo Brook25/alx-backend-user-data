@@ -6,6 +6,7 @@ from uuid import uuid4
 import os
 from models.user import User
 
+
 class SessionAuth(Auth):
     """Session Auth class"""
     user_id_by_session_id = {}
@@ -26,7 +27,7 @@ class SessionAuth(Auth):
         """returns cookie value based on a session name"""
         if request:
             return request.cookies.get(os.getenv('SESSION_NAME'))
-    
+
     def current_user(self, request=None):
         """retrieve current user instance"""
         if request:
