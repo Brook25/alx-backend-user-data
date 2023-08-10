@@ -19,6 +19,9 @@ if auth == 'basic_auth':
 elif auth == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
+elif auth == 'session_exp_auth':
+    from api.v1.auth.session_exp_auth import SessionExpAuth
+    auth = SessionExpAuth()
 else:
     from api.v1.auth.auth import Auth
     auth = Auth()
@@ -28,6 +31,7 @@ else:
 def authenticate() -> None:
     """authorize request before routing"""
     if auth:
+        print(auth)
         if auth.require_auth(request.path, [
             '/api/v1/stat*',
             '/api/v1/unauthorized/',
