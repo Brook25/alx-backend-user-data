@@ -31,14 +31,17 @@ def authenticate() -> None:
         if auth.require_auth(request.path, [
             '/api/v1/stat*',
             '/api/v1/unauthorized/',
-            '/api/v1/forbidden/'
+            '/api/v1/forbidden/',
+            '/api/v1/auth_session/login/'
         ]):
-            if auth.authorization_header(request):
+            if auth.authorization_header(request) or auth.session_cookie(request):
                 user = auth.current_user(request)
                 if not auth.current_user(request):
                     abort(403)
                 request.current_user = user
             else:
+                if request.cookies:
+                    abort(403)
                 abort(401)
 
 
