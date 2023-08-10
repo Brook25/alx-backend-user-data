@@ -34,7 +34,8 @@ def authenticate() -> None:
             '/api/v1/forbidden/',
             '/api/v1/auth_session/login/'
         ]):
-            if auth.authorization_header(request) or auth.session_cookie(request):
+            auth_h = auth.authorization_header(request)
+            if auth_h or auth.session_cookie(request):
                 user = auth.current_user(request)
                 if not auth.current_user(request):
                     abort(403)
