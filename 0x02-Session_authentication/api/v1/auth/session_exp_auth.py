@@ -11,7 +11,10 @@ class SessionExpAuth(SessionAuth):
 
     def __init__(self):
         """Inits session auth with expiration"""
-        self.session_duration = int(os.getenv('SESSION_DURATION'))
+        try:
+            self.session_duration = int(os.getenv('SESSION_DURATION'))
+        except TypeError:
+            self.session_duration = 0
 
     def create_session(self, user_id=None):
         """create session with a created at value"""
