@@ -33,6 +33,7 @@ class SessionDBAuth(SessionExpAuth):
         """Destroy session during logout"""
         if request:
             session_id = request.cookies.get(os.getenv('SESSION_NAME'))
-            session = UserSession.get(session_id)
-            if session:
-                session.remove()
+            if session_id:
+                session = UserSession.get(session_id)
+                if session:
+                    session.remove()
