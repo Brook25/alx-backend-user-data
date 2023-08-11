@@ -15,9 +15,10 @@ class SessionDBAuth(SessionExpAuth):
     """
     def create_session(self, user_id=None):
         """Creates Session"""
-        session = UserSession(user_id, str(uuid4()))
-        session.save()
-        return session.id
+        if user_id:
+            session = UserSession(user_id, str(uuid4()))
+            session.save()
+            return session.id
 
     def user_id_for_session_id(self, session_id=None):
         """Retrieves user_id for session_id"""
@@ -32,5 +33,6 @@ class SessionDBAuth(SessionExpAuth):
         """Destroy session during logout"""
         if request:
             session_id = request.cookies.get(os.getenv('SESSION_NAME'))
-            session = UserSession.search({'id': session_id})[0]
-            session.remove()
+            session = UserSession.get(session_id)
+            if session:
+                session.remove()
