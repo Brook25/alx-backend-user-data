@@ -11,7 +11,7 @@ class UserSession(Base):
         super().__init__(kwargs)
         if args:
             self.user_id = args[0]
-            self.id = args[1]
+            self.session_id = args[1]
         else:
             self.user_id = kwargs.get('user_id')
-            self.id = kwargs.get('id')
+            self.session_id = kwargs.get('session_id')
