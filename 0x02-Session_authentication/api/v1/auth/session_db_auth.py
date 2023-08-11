@@ -24,9 +24,11 @@ class SessionDBAuth(SessionExpAuth):
         """Retrieves user_id for session_id"""
         if session_id:
             session = UserSession.search({'session_id': session_id})
-            if session and session[0].created_at + timedelta(seconds=self.session_duration) > datetime.now():
+            if session and session[0].created_at + timedelta(
+                    seconds=self.session_duration
+            ) > datetime.now():
                 return session[0].user_id
-    
+
     def destroy_session(self, request=None):
         """Destroy session during logout"""
         if request:
