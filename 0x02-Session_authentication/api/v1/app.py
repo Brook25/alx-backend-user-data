@@ -41,6 +41,7 @@ def authenticate() -> None:
             '/api/v1/forbidden/',
             '/api/v1/auth_session/login/'
         ]):
+            print('hhh')
             auth_h = auth.authorization_header(request)
             if auth_h or auth.session_cookie(request):
                 user = auth.current_user(request)
