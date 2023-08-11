@@ -5,7 +5,7 @@ from .base import Base
 
 
 class UserSession(Base):
-   """Session class to persist sessions in DB""" 
+    """Session class to persist sessions in DB""" 
     def __init__(self, *args: list, **kwargs: dict):
         """Init an object"""
         super().__init__(kwargs)
