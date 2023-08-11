@@ -6,7 +6,6 @@ import os
 from uuid import uuid4
 from datetime import timedelta, datetime
 from models.user_session import UserSession
-#from models.base import TIMESTAMP_FORMAT
 TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
@@ -23,10 +22,11 @@ class SessionDBAuth(SessionExpAuth):
     def user_id_for_session_id(self, session_id=None):
         """Retrieves user_id for session_id"""
         if session_id:
-            session = UserSession.search({'id': session_id})[0]
+            session = UserSession.get(session_id)
             if session:
                 if session.created_at + timedelta(seconds=self.session_duration) > datetime.now():
                     return session.user_id
+                session.remove()
     
     def destroy_session(self, request=None):
         """Destroy session during logout"""
